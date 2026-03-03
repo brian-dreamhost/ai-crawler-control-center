@@ -40,12 +40,31 @@ export default function App() {
     return CRAWLERS.filter((c) => c.category === activeCategory);
   }, [activeCategory]);
 
+  const fillTestData = () => {
+    // Realistic scenario: a site owner blocks all training data crawlers
+    // plus the data extraction bot, but allows AI search crawlers through
+    // so their site still appears in AI-powered search results
+    setBlocked(new Set([
+      'GPTBot',
+      'anthropic-ai',
+      'ClaudeBot',
+      'CCBot',
+      'Google-Extended',
+      'Meta-ExternalAgent',
+      'Amazonbot',
+      'Applebot-Extended',
+      'Bytespider',
+      'DiffBot',
+    ]));
+    setActiveCategory('all');
+  };
+
   const blockedCount = blocked.size;
   const totalCount = CRAWLERS.length;
 
   return (
     <div className="min-h-screen bg-abyss text-white bg-glow bg-grid">
-      <div className="max-w-6xl mx-auto px-4 py-12 relative z-10 animate-fadeIn">
+      <div className="max-w-[1600px] mx-auto px-4 py-12 relative z-10 animate-fadeIn">
 
         {/* Breadcrumb */}
         <nav className="mb-8 text-sm text-galactic">
@@ -68,6 +87,13 @@ export default function App() {
           <p className="text-lg text-cloudy max-w-2xl">
             Control which AI bots can crawl your website. Toggle individual crawlers on or off and generate a robots.txt snippet you can add to your site in minutes.
           </p>
+        </div>
+
+        {/* Fill Test Data */}
+        <div className="flex justify-end mb-4">
+          <button type="button" onClick={fillTestData}
+            className="px-3 py-1.5 text-xs font-mono bg-prince/20 text-prince border border-prince/30 rounded hover:bg-prince/30 transition-colors focus:outline-none focus:ring-2 focus:ring-prince focus:ring-offset-2 focus:ring-offset-abyss"
+          >Fill Test Data</button>
         </div>
 
         {/* Info callout */}
@@ -165,7 +191,7 @@ export default function App() {
 
       {/* Footer */}
       <footer className="border-t border-metal/30 mt-16">
-        <div className="max-w-6xl mx-auto px-4 py-6">
+        <div className="max-w-[1600px] mx-auto px-4 py-6">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-galactic">
             <p>AI Crawler Control Center — DreamHost Marketing Tools</p>
             <div className="flex items-center gap-4">
